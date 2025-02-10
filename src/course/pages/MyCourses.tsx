@@ -1,27 +1,41 @@
 import { useEffect, useState } from "react";
-import { getCoursesByStudentId } from "../../services/EnrollmentService";
+import {
+  getCoursesByStudentId,
+  deleteCourseForStudent,
+} from "../../services/EnrollmentService";
 import { Course } from "../../types/CourseType";
 
 const MyCourses = () => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        setIsLoading(true);
-        const studentId = 25;
-        const response = await getCoursesByStudentId(studentId);
-        setCourses(response);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const fetchCourses = async () => {
+    try {
+      setIsLoading(true);
+      const studentId = 25;
+      const response = await getCoursesByStudentId(studentId);
+      setCourses(response);
+    } catch (error) {
+      console.error("Error fetching courses:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  useEffect(() => {
     fetchCourses();
   }, []);
+
+  const handleUnenroll = async (courseId: number) => {
+    try {
+      const studentId = 25;
+      await deleteCourseForStudent(studentId, courseId);
+      // Refresh the courses list after successful unenrollment
+      fetchCourses();
+    } catch (error) {
+      console.error("Error unenrolling from course:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -46,7 +60,11 @@ const MyCourses = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {courses.map((course) => (
-              <MyCourseCard key={course.courseId} course={course} />
+              <MyCourseCard
+                key={course.courseId}
+                course={course}
+                onUnenroll={handleUnenroll}
+              />
             ))}
           </div>
         )}
@@ -63,10 +81,23 @@ const MyCourses = () => {
 
 interface CourseCardProps {
   course: Course;
+  onUnenroll: (courseId: number) => Promise<void>;
 }
 
-const MyCourseCard = ({ course }: CourseCardProps) => {
+const MyCourseCard = ({ course, onUnenroll }: CourseCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
+  const [isUnenrolling, setIsUnenrolling] = useState(false);
+
+  const handleUnenrollClick = async () => {
+    if (window.confirm("Are you sure you want to unenroll from this course?")) {
+      setIsUnenrolling(true);
+      try {
+        await onUnenroll(course.courseId);
+      } finally {
+        setIsUnenrolling(false);
+      }
+    }
+  };
 
   return (
     <div
@@ -102,9 +133,16 @@ const MyCourseCard = ({ course }: CourseCardProps) => {
           </span>
         </div>
 
-        <div className="pt-2">
+        <div className="pt-2 space-y-2">
           <button className="w-full py-2.5 px-4 rounded-lg font-medium bg-green-100 text-green-600 hover:bg-green-200 transition-all duration-300 transform active:scale-95">
             View Course Details
+          </button>
+          <button
+            onClick={handleUnenrollClick}
+            disabled={isUnenrolling}
+            className="w-full py-2.5 px-4 rounded-lg font-medium bg-red-50 text-red-600 hover:bg-red-100 transition-all duration-300 transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isUnenrolling ? "Unenrolling..." : "Unenroll from Course"}
           </button>
         </div>
       </div>

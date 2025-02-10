@@ -29,3 +29,19 @@ export const getCoursesByStudentId = async (studentId: number) => {
     throw error;
   }
 };
+
+export const deleteCourseForStudent = async (
+  studentId: number,
+  courseId: number
+) => {
+  try {
+    const response = await axios.delete(
+      `http://localhost:8081/students/${studentId}/courses/${courseId}`
+    );
+    console.log("Course deleted successfully:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error deleting course:", error);
+    throw error;
+  }
+};
