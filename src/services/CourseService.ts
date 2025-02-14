@@ -69,3 +69,13 @@ export const getCourseByDepartment = async (departmentId: number) => {
     throw error;
   }
 };
+
+export const searchCourses = async (searchTerm: string) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/search?query=${searchTerm}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error searching courses:", error);
+    throw error;
+  }
+};

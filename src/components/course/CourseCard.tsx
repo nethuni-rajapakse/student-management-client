@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BookOpen, Clock, Building } from "lucide-react";
 import { CourseCardProps } from "../../types/course";
 import UpdateCourseButton from "../../components/course/UpdateCourseButton";
@@ -11,6 +11,32 @@ const CourseCard: React.FC<CourseCardProps> = ({
   departmentName,
   credits,
 }) => {
+  const [courses, setCourses] = useState<CourseCardProps[]>([]);
+
+  // Fetch courses (you might have an API call here)
+  const fetchCourses = async () => {
+    // Replace with your actual data fetching logic
+    const response = await fetch("/api/courses");
+    const data = await response.json();
+    setCourses(data);
+  };
+
+  useEffect(() => {
+    fetchCourses();
+  }, []); // Empty dependency array means it runs once when the component mounts
+
+  const handleCourseUpdate = (updatedCourse: CourseCardProps) => {
+    // Logic for updating the course (you can call your API here)
+    // After updating, refetch courses
+    fetchCourses();
+  };
+
+  const handleCourseDelete = (courseId: number) => {
+    // Logic for deleting the course (you can call your API here)
+    // After deleting, refetch courses
+    fetchCourses();
+  };
+
   return (
     <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-md">
       <div className="p-6 space-y-6">

@@ -130,7 +130,7 @@ const CreateCourseForm = () => {
 
       {isOpen && (
         <div
-          className={`fixed inset-0 z-40 flex items-center justify-center p-4 transition-opacity duration-200 ease-in-out
+          className={`fixed inset-0 z-40 flex items-center justify-center mt-23 p-4 transition-opacity duration-200 ease-in-out
             ${isClosing ? "opacity-0" : "opacity-100"}`}
         >
           <div
@@ -146,7 +146,7 @@ const CreateCourseForm = () => {
               }`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex justify-between items-center mb-4">
+            <div className="flex justify-between items-center mb-1">
               <h2 className="text-3xl font-extrabold text-gray-900">
                 Create New Course
               </h2>
@@ -170,7 +170,7 @@ const CreateCourseForm = () => {
               </button>
             </div>
             <p className="text-sm text-gray-600 mb-6">
-              Add a new course to your organization
+              Add a new course to Ascendia
             </p>
 
             <form className="space-y-6" onSubmit={handleSubmit}>

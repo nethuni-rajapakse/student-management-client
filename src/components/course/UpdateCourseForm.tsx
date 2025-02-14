@@ -115,10 +115,10 @@ const UpdateCourseForm: React.FC<UpdateCourseFormProps> = ({
         onClick={onClose}
       />
       <div
-        className="relative max-w-md w-full bg-white rounded-xl shadow-2xl p-8"
+        className="relative max-w-md w-full bg-white mt-23 rounded-xl shadow-2xl p-8"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center mb-1">
           <h2 className="text-3xl font-extrabold text-gray-900">
             Update Course
           </h2>

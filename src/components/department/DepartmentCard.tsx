@@ -1,8 +1,8 @@
 import React from "react";
 import { UserCircle } from "lucide-react";
-import { DepartmentCardProps } from "../../types/department";
+import { DepartmentCardProps, Department } from "../../types/department";
 
-const DepartmentCard: React.FC<Department> = ({
+const DepartmentCard: React.FC<DepartmentCardProps> = ({
   departmentId,
   departmentName,
   headOfDepartment,
