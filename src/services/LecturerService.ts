@@ -15,6 +15,16 @@ export const createLecturer = async (formData: CreateLecturerProps) => {
   }
 };
 
+export const getLecturers = async (): Promise<Lecturer[]> => {
+  try {
+    const response = await axios.get(BASE_URL);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching lecturers:", error);
+    throw error;
+  }
+};
+
 export const getLecturerById = async (
   lecturerId: number
 ): Promise<Lecturer> => {

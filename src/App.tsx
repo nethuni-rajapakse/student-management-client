@@ -9,11 +9,12 @@ import Courses from "./pages/course/Courses";
 
 import SideNavigation from "./components/SideNavigation";
 import TopNavigation from "./components/TopNavigation";
+import AllStudents from "./pages/student/AllStudents";
+import ÄllLecturers from "./pages/lecturer/AllLecturers";
 
 const App = () => {
   return (
     <Router>
-
       <div className="min-h-screen bg-gray-50">
         {/* Top Navigation */}
         <TopNavigation />
@@ -30,14 +31,15 @@ const App = () => {
           <div className="flex-1 ml-64">
             {" "}
             {/* ml-64 matches the width of side nav */}
-            
             <Routes>
               <Route path="/" element={<Landing />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Registration />} />
-              
+
               <Route path="/all-departments" element={<Departments />} />
               <Route path="/all-courses" element={<Courses />} />
+              <Route path="/all-students" element={<AllStudents />} />
+              <Route path="/all-lecturers" element={<ÄllLecturers />} />
             </Routes>
           </div>
         </div>

@@ -8,3 +8,9 @@ export interface CreateStudentProps {
   profilePhoto: string;
   address: string;
 }
+
+export interface StudentProps extends CreateStudentProps {
+  studentId: number;
+  createdAt: string;
+  updatedAt: string;
+}

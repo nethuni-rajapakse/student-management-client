@@ -22,10 +22,10 @@ const SideNavigation = () => {
           Academic Portal
         </h2>
 
-        {/* Students Section */}
+        {/* Users Section */}
         <div className="mb-2">
           <button
-            onClick={() => toggleSection("students")}
+            onClick={() => toggleSection("users")}
             className="w-full flex items-center justify-between p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <div className="flex items-center gap-2">
@@ -35,20 +35,24 @@ const SideNavigation = () => {
             <ChevronDown
               size={16}
               className={`transform transition-transform ${
-                expandedSection === "students" ? "rotate-180" : ""
+                expandedSection === "users" ? "rotate-180" : ""
               }`}
             />
           </button>
-          {expandedSection === "students" && (
+          {expandedSection === "users" && (
             <div className="ml-8 mt-1 space-y-1">
-              {menuItems.users.map((item) => (
-                <button
-                  key={item}
-                  className="w-full text-left p-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  {item}
-                </button>
-              ))}
+              <button
+                onClick={() => navigate("/all-lecturers")}
+                className="w-full text-left p-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                Lecturers
+              </button>
+              <button
+                onClick={() => navigate("/all-students")}
+                className="w-full text-left p-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                Students
+              </button>
             </div>
           )}
         </div>
