@@ -7,15 +7,14 @@ import AddDepartmentButton from "../../components/department/CreateDepartmentFor
 
 const Departments = () => {
   const [departments, setDepartments] = useState<Department[]>([]);
-  const [headNames, setHeadNames] = useState<{ [key: string]: string }>({}); // Stores lecturer names by lecturerId
+  const [headNames, setHeadNames] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     const fetchDepartments = async () => {
       const data = await getAllDepartments();
       setDepartments(data);
 
-      // Fetch head of department names
-      const headFetchPromises = data.map(async (department) => {
+      const headFetchPromises = data.map(async (department: Department) => {
         if (department.headOfDepartmentId) {
           const lecturer = await getLecturerById(department.headOfDepartmentId);
           return {

@@ -98,6 +98,9 @@ const CreateCourseForm = () => {
       });
     } finally {
       setIsLoading(false);
+      () => {
+        window.location.reload();
+      };
     }
   };
 

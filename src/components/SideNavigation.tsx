@@ -1,18 +1,14 @@
 import React from "react";
 import { Users, Building2, BookOpen, ChevronDown } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const SideNavigation = () => {
+  const navigate = useNavigate();
   const [expandedSection, setExpandedSection] = React.useState("");
 
   const menuItems = {
-    students: [
-      "Student Directory",
-      "Admissions",
-      "Student Records",
-      "Academic Progress",
-    ],
-    departments: ["Engineering", "Science", "Arts", "Business", "Medicine"],
-    courses: ["Course Catalog", "Schedule", "Registration", "Grade Center"],
+    users: ["Lecturers", "Students"],
+    departments: ["Lecturers", "Courses"],
   };
 
   const toggleSection = (section: React.SetStateAction<string>) => {
@@ -34,7 +30,7 @@ const SideNavigation = () => {
           >
             <div className="flex items-center gap-2">
               <Users size={20} />
-              <span>Students</span>
+              <span>Users</span>
             </div>
             <ChevronDown
               size={16}
@@ -45,7 +41,7 @@ const SideNavigation = () => {
           </button>
           {expandedSection === "students" && (
             <div className="ml-8 mt-1 space-y-1">
-              {menuItems.students.map((item) => (
+              {menuItems.users.map((item) => (
                 <button
                   key={item}
                   className="w-full text-left p-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
@@ -60,11 +56,15 @@ const SideNavigation = () => {
         {/* Departments Section */}
         <div className="mb-2">
           <button
-            onClick={() => toggleSection("departments")}
+            onClick={() => {
+              toggleSection("departments");
+              navigate("/all-departments");
+            }}
             className="w-full flex items-center justify-between p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <div className="flex items-center gap-2">
               <Building2 size={20} />
+
               <span>Departments</span>
             </div>
             <ChevronDown
@@ -91,32 +91,14 @@ const SideNavigation = () => {
         {/* Courses Section */}
         <div className="mb-2">
           <button
-            onClick={() => toggleSection("courses")}
+            onClick={() => navigate("/all-courses")}
             className="w-full flex items-center justify-between p-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
           >
             <div className="flex items-center gap-2">
               <BookOpen size={20} />
               <span>Courses</span>
             </div>
-            <ChevronDown
-              size={16}
-              className={`transform transition-transform ${
-                expandedSection === "courses" ? "rotate-180" : ""
-              }`}
-            />
           </button>
-          {expandedSection === "courses" && (
-            <div className="ml-8 mt-1 space-y-1">
-              {menuItems.courses.map((item) => (
-                <button
-                  key={item}
-                  className="w-full text-left p-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
-                >
-                  {item}
-                </button>
-              ))}
-            </div>
-          )}
         </div>
       </div>
     </nav>

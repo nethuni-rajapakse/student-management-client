@@ -28,6 +28,8 @@ const DeleteCourseButton = ({ courseId }: DeleteCourseButtonProps) => {
         timer: 2000,
         timerProgressBar: true,
         showConfirmButton: false,
+      }).then(() => {
+        window.location.reload();
       });
     }
   };
