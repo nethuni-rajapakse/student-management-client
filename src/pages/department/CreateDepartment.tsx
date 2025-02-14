@@ -1,4 +1,4 @@
-import DepartmentForm from "../../components/department/DepartmentForm";
+import DepartmentModal from "../../components/department/CreateDepartmentForm";
 
 const CreateDepartment = () => {
   return (
@@ -7,7 +7,7 @@ const CreateDepartment = () => {
         Create Department
       </h2>
       <div className="h-1 w-24 bg-blue-600 mx-auto rounded-full"></div>
-      <DepartmentForm />
+      <DepartmentModal />
     </div>
   );
 };

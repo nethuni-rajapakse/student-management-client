@@ -1,26 +1,43 @@
 import { useEffect, useState } from "react";
 import { getAllDepartments } from "../../services/DepartmentService";
+import { getLecturerById } from "../../services/LecturerService";
 import { Department } from "../../types/department";
 import DepartmentCard from "../../components/department/DepartmentCard";
-import { Plus } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import AddDepartmentButton from "../../components/department/CreateDepartmentForm";
 
 const Departments = () => {
-  const navigate = useNavigate();
   const [departments, setDepartments] = useState<Department[]>([]);
+  const [headNames, setHeadNames] = useState<{ [key: string]: string }>({}); // Stores lecturer names by lecturerId
 
   useEffect(() => {
     const fetchDepartments = async () => {
       const data = await getAllDepartments();
       setDepartments(data);
+
+      // Fetch head of department names
+      const headFetchPromises = data.map(async (department) => {
+        if (department.headOfDepartmentId) {
+          const lecturer = await getLecturerById(department.headOfDepartmentId);
+          return {
+            [department.departmentId]:
+              lecturer.firstName + " " + lecturer.lastName,
+          };
+        }
+        return { [department.departmentId]: "Not Assigned" };
+      });
+
+      const headResults = await Promise.all(headFetchPromises);
+
+      // Merge results into a single object
+      const heads = headResults.reduce(
+        (acc, head) => ({ ...acc, ...head }),
+        {}
+      );
+      setHeadNames(heads);
     };
 
     fetchDepartments();
   }, []);
-
-  const handleAddDepartment = () => {
-    navigate("/create-department");
-  };
 
   return (
     <div>
@@ -29,13 +46,7 @@ const Departments = () => {
           <h2 className="text-4xl font-bold text-gray-900 mb-2">Departments</h2>
           <div className="h-1 w-24 bg-blue-600 rounded-full"></div>
         </div>
-        <button
-          onClick={handleAddDepartment}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
-        >
-          <Plus size={20} />
-          Add Department
-        </button>
+        <AddDepartmentButton />
       </div>
       <ul>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -44,7 +55,9 @@ const Departments = () => {
               key={department.departmentId}
               departmentId={department.departmentId}
               departmentName={department.departmentName}
-              headOfDepartment={"Not Assigned"}
+              headOfDepartment={
+                headNames[department.departmentId] || "Not Assigned"
+              }
             />
           ))}
         </div>

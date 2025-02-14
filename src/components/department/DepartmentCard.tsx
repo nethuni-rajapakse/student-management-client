@@ -1,11 +1,11 @@
 import React from "react";
-import { UserCircle, Trash } from "lucide-react";
+import { UserCircle } from "lucide-react";
 import { DepartmentCardProps } from "../../types/department";
 
-const DepartmentCard: React.FC<DepartmentCardProps> = ({
+const DepartmentCard: React.FC<Department> = ({
   departmentId,
   departmentName,
-  headOfDepartment = "Not Assigned", // Default value if no head is assigned
+  headOfDepartment,
 }) => {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">

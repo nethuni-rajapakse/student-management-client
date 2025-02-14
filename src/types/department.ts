@@ -4,7 +4,7 @@ export interface Department {
   headOfDepartmentId: number | null;
 }
 
-export interface newDepartment {
+export interface DepartmentProps {
   departmentName: string;
 }
 
